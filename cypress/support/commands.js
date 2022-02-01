@@ -1,25 +1,34 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('verifyText', { prevSubject: ['element'] }, (subject, expected) => {
+  // any simple way to make this retryable? and keep the advantage of calling this function directly on a Cypress.Chainable?
+  expect(subject).to.have.textTrimmed(expected);
+});
+
+chai.use((chai, _utils) => {
+  chai.Assertion.addMethod('textTrimmed', function (expected) {
+    // eslint-disable-next-line no-underscore-dangle
+    const $element = this._obj;
+    new chai.Assertion($element).to.exist; // NOSONAR
+    const actual = getElementValueOrText($element)
+      .replace(/\u00A0/g, ' ') // replace non-breaking space
+      .replace(/\u200B/g, '') // replace zero width space
+      .replace(/\s/g, ' ') // replace new lines, tabs with normal space
+      .trim();
+    let isEqual;
+    if (expected instanceof RegExp) {
+      isEqual = !!actual.match(expected);
+    } else {
+      isEqual = actual === `${expected}`;
+    }
+
+    const actualTextEscaped = escape(actual);
+    const explanation = `but the TRIMMED text was #{act}. Actual text escaped: '${actualTextEscaped}'`;
+    this.assert(isEqual, `expected #{this} to have text #{exp}, ${explanation}`, `expected #{this} not to have text #{exp}, ${explanation}`, expected, actual, true);
+  });
+});
+
+function getElementValueOrText(element) {
+  if (typeof element === 'string') {
+    return element;
+  }
+  return element.prop('tagName') === 'INPUT' ? `${element.val()}` : element.text();
+}

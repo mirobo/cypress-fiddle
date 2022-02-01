@@ -10,33 +10,26 @@
     <script src="jq.js"></script>
     <script>
       $(document).ready(function () {
-        $('#btn').click(function () {
+        $('#exchangeRow').click(function () {
           setTimeout(function () {
+            console.log('exchangeRow');
             $('#evilRow').remove();
-            $('tbody tr:last').after('<tr id="evilRow"><td>new text</td></tr>');
-          }, 2000);
+            $('tbody tr:last').after('<tr id="evilRow"><td>  new text  </td></tr>');
+          }, 500);
         });
       });
     </script>
     <h1>table update test</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>col</th>
-        </tr>
-      </thead>
+    <table id="t">
       <tbody>
         <tr>
           <td>a</td>
-        </tr>
-        <tr>
-          <td>b</td>
         </tr>
         <tr id="evilRow">
           <td>c</td>
         </tr>
       </tbody>
     </table>
-    <button id="btn">my button</button>
+    <button id="exchangeRow">exchange complete row</button>
   </body>
 </html>
