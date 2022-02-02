@@ -3,6 +3,38 @@ Cypress.Commands.add('verifyText', { prevSubject: ['element'] }, (subject, expec
   expect(subject).to.have.textTrimmed(expected);
 });
 
+Cypress.Commands.add('verifyText2', { prevSubject: ['element'] }, (subject, expected) => {
+  const log = {
+    name: 'verifyText2',
+    message: `'${expected}'`,
+  };
+  Cypress.log(log);
+
+  const verifyTextTrimmed = () => {
+    expect(subject).to.have.textTrimmed(expected);
+  };
+
+  const resolveValue = () => {
+    return Cypress.Promise.try(verifyTextTrimmed).then(($el) => {
+      if (!Cypress.dom.isJquery($el)) {
+        $el = Cypress.$($el);
+      }
+      return cy.verifyUpcomingAssertions($el, options, {
+        onRetry: resolveValue,
+      });
+    });
+  };
+
+  return resolveValue().then((el) => {
+    log.consoleProps = () => {
+      return {
+        result: el,
+      };
+    };
+    return el;
+  });
+});
+
 chai.use((chai, _utils) => {
   chai.Assertion.addMethod('textTrimmed', function (expected) {
     // eslint-disable-next-line no-underscore-dangle
@@ -22,7 +54,14 @@ chai.use((chai, _utils) => {
 
     const actualTextEscaped = escape(actual);
     const explanation = `but the TRIMMED text was #{act}. Actual text escaped: '${actualTextEscaped}'`;
-    this.assert(isEqual, `expected #{this} to have text #{exp}, ${explanation}`, `expected #{this} not to have text #{exp}, ${explanation}`, expected, actual, true);
+    this.assert(
+      isEqual,
+      `expected #{this} to have text #{exp}, ${explanation}`,
+      `expected #{this} not to have text #{exp}, ${explanation}`,
+      expected,
+      actual,
+      true
+    );
   });
 });
 
