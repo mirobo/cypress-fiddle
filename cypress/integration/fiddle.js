@@ -1,6 +1,7 @@
 /// <reference types="@cypress/fiddle" />
 
-const cell = () => cy.get('#evilRow td').as('cell');
+// const cell = () => cy.get("#evilRow").find("td"); // -> DOM detached issue
+const cell = () => cy.get('#evilRow td'); // selector OK
 
 describe('retry test', () => {
   beforeEach(() => {
@@ -9,8 +10,26 @@ describe('retry test', () => {
     cy.get('#exchangeRow').click();
   });
 
-  it('figure out verifyText2 retryability', () => {
-    cell().verifyText2('new text');
+  it('verifyValue3 should retry', () => {
+    // cell().contains("new text");
+    // cy.contains("#evilRow td", "new text");
+    cell().verifyValue3('new text');
+    // cy.verifyValue3(cell(), "new text");
+    // cell().should("have.textTrimmed", "new text");
+  });
+
+  it('should fail', () => {
+    Cypress.on('fail', (error, runnable) => {
+      expect(error.name).to.eq('AssertionError');
+      expect(error.message).to.match(
+        /Timed out retrying after 4000ms: expected '<td>' to have text 'new text4', but the TRIMMED text was 'new text'. Actual text escaped: 'new%20text'/
+      );
+    });
+    // cell().contains("new text");
+    // cy.contains("#evilRow td", "new text");
+    cell().verifyValue3('new text4');
+    // cy.verifyValue3(cell(), "new text");
+    // cell().should("have.textTrimmed", "new text");
   });
 
   xdescribe('old experiment', () => {
