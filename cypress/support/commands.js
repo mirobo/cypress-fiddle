@@ -3,8 +3,8 @@ Cypress.Commands.add('verifyText', { type: 'assertion', prevSubject: ['element']
 });
 
 Cypress.Commands.add('verifyText2', { type: 'assertion', prevSubject: ['element'] }, (subject, expected) => {
-  return Cypress.Promise.try(() => subject).then((trimmedText) => {
-    expect(trimmedText).to.have.textTrimmed(expected);
+  return Cypress.Promise.try(() => subject).then((subject) => {
+    expect(subject).to.have.textTrimmed(expected);
   });
 });
 

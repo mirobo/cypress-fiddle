@@ -12,7 +12,7 @@ describe('retry test', () => {
     cy.get('#exchangeRow').click();
   });
 
-  it('verifyText2 will fail', () => {
+  it('works as expected: verifyText2 will fail because only last command is retry', () => {
     // will fail.. the last command doesn't contain the element which is exchanged in the DOM
     cy.get('#evilRow').find('td').verifyText2('new text');
   });
@@ -24,7 +24,7 @@ describe('retry test', () => {
       getCellWithFind().verifyText2('new text');
     });
 
-    it('verifyText2 should fail because of timeout', () => {
+    it('verifyText2 should throw timeout error (but we catch it)', () => {
       Cypress.on('fail', (error, runnable) => {
         expect(error.name).to.eq('AssertionError');
         expect(error.message).to.match(
@@ -42,7 +42,7 @@ describe('retry test', () => {
       getCellWithSingleGet().verifyText2('new text');
     });
 
-    it('verifyText2 should fail because of timeout', () => {
+    it('verifyText2 should throw timeout error (but we catch it)', () => {
       Cypress.on('fail', (error, runnable) => {
         expect(error.name).to.eq('AssertionError');
         expect(error.message).to.match(
