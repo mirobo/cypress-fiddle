@@ -10,6 +10,7 @@
     <script src="jq.js"></script>
     <script>
       $(document).ready(function () {
+        $('#now').text(new Date().toLocaleDateString());
         $('#exchangeRow').click(function () {
           setTimeout(function () {
             console.log('exchangeRow');
@@ -20,6 +21,7 @@
       });
     </script>
     <h1>table update test</h1>
+    Now: <span id="now"></span>
     <table id="t">
       <tbody>
         <tr>

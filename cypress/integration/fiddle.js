@@ -1,10 +1,21 @@
 /// <reference types="@cypress/fiddle" />
+import { addDays } from 'date-fns';
 
 let cell;
 
-//
+xdescribe('cy.clock test', () => {
+  beforeEach(() => {
+    cy.clock(new Date('2022-03-25'), ['Date']);
+    cy.visit('/');
+  });
 
-describe('retry test', () => {
+  it('clock test', () => {
+    cy.log(addDays(new Date(), 1).toLocaleDateString());
+    cy.get('#now').should('have.text', '25.3.2022');
+  });
+});
+
+xdescribe('retry test', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.contains('#evilRow td', 'c');

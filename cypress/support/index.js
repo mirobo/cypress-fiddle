@@ -14,10 +14,10 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
 // adds "cy.runExample()" command
-import '@cypress/fiddle'
+import '@cypress/fiddle';
