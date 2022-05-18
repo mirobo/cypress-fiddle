@@ -1,3 +1,6 @@
 {
-  "baseUrl": null
+  "baseUrl": null,
+  "env": {
+    "driveByErrorsEnabled": true
+  }
 }

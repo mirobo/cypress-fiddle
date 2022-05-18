@@ -13,11 +13,49 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
 import './commands';
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
-
 // adds "cy.runExample()" command
 import '@cypress/fiddle';
+
+// const driveByErrorEnvVarName = 'driveByErrors';
+// export const getDriveByErrors = () => Cypress.env(driveByErrorEnvVarName);
+// export const initDriveByErrors = () => Cypress.env(driveByErrorEnvVarName, []);
+// export const addDriveByError = (obj) => {
+//   getDriveByErrors().push(obj);
+// };
+
+// before(() => {
+//   initDriveByErrors();
+// });
+
+// afterEach(function () {
+//   const testReference = `${this.currentTest.parent.file}: ${this.currentTest.title}`;
+//   if (Math.random() < 0.5) {
+//     addDriveByError({
+//       testReference,
+//       consoleErrors: ['a', 'b', 'c'],
+//       validationErrors: ['d', 'e'],
+//     });
+//   }
+// });
+
+// after(function () {
+//   if (Cypress.env('driveByErrorsEnabled')) {
+//     const driveByErrors = getDriveByErrors();
+//     for (const error of driveByErrors) {
+//       cy.log(error);
+//     }
+
+//     // not sure if it's better to let the test fail with an assertion
+//     // or with throwing an error..
+//     // expect(
+//     //   driveByErrors,
+//     //   `found a total of ${driveByErrors.length} drive-by errors in!\r\n${JSON.stringify(driveByErrors, null, 2)}`
+//     // ).to.have.length(0);
+//     if (driveByErrors.length) {
+//       throw new Error(
+//         `found a total of ${driveByErrors.length} drive by errors!\r\n${JSON.stringify(driveByErrors, null, 2)}`
+//       );
+//     }
+//   }
+// });

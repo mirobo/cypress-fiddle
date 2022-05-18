@@ -1,3 +1,15 @@
+// const driveByErrorEnvVarName = 'driveByErrors';
+// export function getDriveByErrors() {
+//   Cypress.env(driveByErrorEnvVarName);
+// }
+// export function initDriveByErrors() {
+//   debugger;
+//   Cypress.env(driveByErrorEnvVarName, []);
+// }
+// export function addDriveByError(obj) {
+//   getDriveByErrors().push(obj);
+// }
+
 Cypress.Commands.add('verifyText', { type: 'assertion', prevSubject: ['element'] }, (subject, expected) => {
   expect(subject).to.have.textTrimmed(expected);
 });
