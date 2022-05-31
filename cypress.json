@@ -1,5 +1,7 @@
 {
   "baseUrl": null,
+  "experimentalSessionAndOrigin": true,
+  "experimentalInteractiveRunEvents": true,
   "env": {
     "driveByErrorsEnabled": true
   }

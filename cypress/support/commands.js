@@ -57,3 +57,40 @@ function getElementValueOrText(element) {
   }
   return element.prop('tagName') === 'INPUT' ? `${element.val()}` : element.text();
 }
+
+export function ifElseVisible(cyChainable, ifFn, elseFn) {
+  return ifElse(cyChainable, (el) => Cypress.dom.isElement(el) && Cypress.dom.isVisible(el), ifFn, elseFn);
+}
+
+export function ifElse(cyChainable, conditionCallback, ifFn, elseFn) {
+  cyChainable()
+    .should((_) => {})
+    .then(($el) => {
+      const result = conditionCallback($el);
+      Cypress.log({
+        name: 'ifElse',
+        message: `conditionCallback returned ${result}, calling ${result ? 'ifFn' : 'elseFn'}`,
+        type: 'parent',
+        consoleProps: () => {
+          return {
+            conditionCallback,
+          };
+        },
+      });
+      if (result) {
+        ifFn(cyChainable);
+      } else {
+        if (elseFn) {
+          elseFn(cyChainable);
+        }
+      }
+    });
+  return cyChainable;
+}
+
+export function visitStaticWebPage(webpageContent) {
+  cy.intercept({ url: '/staticMockedWebPage', method: 'GET' }, (req) => {
+    req.reply(200, webpageContent);
+  });
+  cy.visit('/staticMockedWebPage');
+}
