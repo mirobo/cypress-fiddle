@@ -2,6 +2,8 @@
   "baseUrl": null,
   "experimentalSessionAndOrigin": true,
   "experimentalInteractiveRunEvents": true,
+  "viewportWidth": 1900,
+  "viewportHeight": 1900,
   "env": {
     "driveByErrorsEnabled": true
   }
