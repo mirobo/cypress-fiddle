@@ -16,7 +16,31 @@ it('test 1 with should(contain,..) that work', () => {
   });
 });
 
-it('test 2 with should(contain,...) that fails with unhelpful error message', () => {
+it('test 2A with cy.get(..).contains(..) that fails with unhelpful error message', () => {
+  cy.runExample({
+    html: `<html><body><p> This is some text<br />with visual line breaks, nbsp   and line breaks
+      in
+      the
+      DOM<br />Have fun :-) </p></body></html>`,
+    test: `
+      cy.contains('This is some textwith visual line breaks, nbsp   and line breaks\\n      in\\n      the\\n      DOMHave fun :-)')
+      cy.get('p').contains('does not trigger a useful error message, we dont see the actual text of the element. and it does not work the same way as should(contain,...)')`,
+  });
+});
+
+it('test 2A with cy.contains(..) that fails with unhelpful error message', () => {
+  cy.runExample({
+    html: `<html><body><p> This is some text<br />with visual line breaks, nbsp   and line breaks
+      in
+      the
+      DOM<br />Have fun :-) </p></body></html>`,
+    test: `
+      cy.contains('This is some textwith visual line breaks, nbsp   and line breaks\\n      in\\n      the\\n      DOMHave fun :-)')
+      cy.contains('does not trigger a useful error message, we dont see the actual text of the element. and it does not work the same way as should(contain,...)')`,
+  });
+});
+
+it('test 2C with should(contain,...) that fails with unhelpful error message', () => {
   cy.runExample({
     html: `<html><body><p> This is some text<br />with visual line breaks, nbsp   and line breaks
       in
@@ -35,7 +59,7 @@ it('test 3 with should(have.text) that fails with helpful message and strips non
         the
         DOM<br />Have fun :-) </p></body></html>`,
     test: `
-        cy.get('p').should('have.text',' This is some textwith visual line breaks, nbsp   and line breaks\\n        in\\n        the\\n        DOMHave fun :-) ');
+        cy.get('p').should('have.text',' This is some textwith visual line breaks, nbsp   and line breaks\\n        in\\n        the\\n        DOMHave fun :-) ');
         cy.get('p').should('have.text','triggers a useful error message')`,
   });
 });
