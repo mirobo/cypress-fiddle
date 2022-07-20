@@ -4,13 +4,15 @@
   "description": "",
   "scripts": {
     "cy:open": "npx cypress open --e2e --browser electron",
-    "cy:open:global": "npx cypress open --global --e2e --browser electron",
+    "cy:open:global": "npx cypress open --global",
     "cy:run": "npx cypress run",
+    "cy:run:one-spec": "npx cypress run --spec=**/before-each.js",
     "cy:info": "npx cypress info",
     "cy:local:dummy-test": "npx cypress run --spec 'cypress/integration/dummy-pass.spec.js'",
     "cy:local:dummy-test-with-normal-failure": "npx cypress run --spec 'cypress/integration/dummy-with-normal-failure.spec.js'",
     "cy:local:dummy-test-with-compilation-error": "npx cypress run --spec 'cypress/integration/dummy-with-compilation-error.spec.js'",
     "start:dummy-dashboard-server": "node dummy-cypress-dashboard-server.js",
+    "cy:run-check-config": "node cypress-run.js n_a \"cypress/integration/log-env.spec.js\"",
     "cy:dummy-test-vs-dashboard-server-200": "node cypress-run.js 200 \"cypress/integration/dummy-pass.spec.js\"",
     "cy:dummy-test-vs-dashboard-server-500": "node cypress-run.js 500 \"cypress/integration/dummy-pass.spec.js\"",
     "cy:dummy-test-with-normal-failure-vs-dashboard-server-200": "node cypress-run.js 200 \"cypress/integration/dummy-with-normal-failure.spec.js\"",
@@ -21,8 +23,8 @@
   "author": "mirobo",
   "license": "ISC",
   "devDependencies": {
-    "@cypress/fiddle": "^1.19.3",
-    "cypress": "^10.4.0",
-    "date-fns": "^2.28.0"
+    "@cypress/fiddle": "1.19.3",
+    "cypress": "13.6.1",
+    "date-fns": "2.28.0"
   }
 }
