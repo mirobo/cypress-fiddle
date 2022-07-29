@@ -4,6 +4,7 @@
   "experimentalInteractiveRunEvents": true,
   "viewportWidth": 1900,
   "viewportHeight": 1900,
+  "projectId": "mirobo-cypress-fiddle",
   "env": {
     "driveByErrorsEnabled": true
   }

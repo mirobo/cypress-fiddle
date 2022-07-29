@@ -4,13 +4,23 @@
   "description": "",
   "scripts": {
     "cy:open": "npx cypress open",
-    "cy:run": "npx cypress run"
+    "cy:run": "npx cypress run",
+    "cy:local:dummy-test": "npx cypress run --spec 'cypress/integration/dummy-pass.spec.js'",
+    "cy:local:dummy-test-with-normal-failure": "npx cypress run --spec 'cypress/integration/dummy-with-normal-failure.spec.js'",
+    "cy:local:dummy-test-with-compilation-error": "npx cypress run --spec 'cypress/integration/dummy-with-compilation-error.spec.js'",
+    "start:dummy-dashboard-server": "node dummy-cypress-dashboard-server.js",
+    "cy:dummy-test-vs-dashboard-server-200": "node cypress-run.js 200 \"cypress/integration/dummy-pass.spec.js\"",
+    "cy:dummy-test-vs-dashboard-server-500": "node cypress-run.js 500 \"cypress/integration/dummy-pass.spec.js\"",
+    "cy:dummy-test-with-normal-failure-vs-dashboard-server-200": "node cypress-run.js 200 \"cypress/integration/dummy-with-normal-failure.spec.js\"",
+    "cy:dummy-test-with-normal-failure-vs-dashboard-server-500": "node cypress-run.js 500 \"cypress/integration/dummy-with-normal-failure.spec.js\"",
+    "cy:dummy-test-with-compilation-error-vs-dashboard-server-200": "node cypress-run.js 200 \"cypress/integration/dummy-with-compilation-error.spec.js\"",
+    "cy:dummy-test-with-compilation-error-vs-dashboard-server-500": "node cypress-run.js 500 \"cypress/integration/dummy-with-compilation-error.spec.js\""
   },
   "author": "mirobo",
   "license": "ISC",
   "devDependencies": {
     "@cypress/fiddle": "^1.19.3",
-    "cypress": "^9.6.1",
+    "cypress": "^9.7.0",
     "date-fns": "^2.28.0"
   }
 }

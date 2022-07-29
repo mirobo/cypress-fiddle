@@ -1,5 +1,9 @@
 .npmrc
 package-lock.json
+cypress/screenshots
+cypress/videos
+cypress/reports
+cypress/downloads
 
 # Logs
 logs
