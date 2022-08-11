@@ -22,7 +22,7 @@
   "license": "ISC",
   "devDependencies": {
     "@cypress/fiddle": "^1.19.3",
-    "cypress": "^10.0.3",
+    "cypress": "^10.4.0",
     "date-fns": "^2.28.0"
   }
 }
