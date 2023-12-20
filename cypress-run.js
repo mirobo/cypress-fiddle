@@ -5,13 +5,13 @@ process.env['CYPRESS_INTERNAL_ENV'] = 'development';
 process.env['API_RETRY_INTERVALS'] = '1000,1000,1000';
 
 const runOptions = {
-  tag: process.argv[2], // abusing "tag" to hand over the response status code that the dummy dashboard server should return
+  // tag: process.argv[2], // abusing "tag" to hand over the response status code that the dummy dashboard server should return
   spec: process.argv[3],
-  record: true,
-  parallel: true,
-  watchForFileChanges: false,
-  key: 'dummyKey',
-  ciBuildId: '123',
+  // record: true,
+  // parallel: true,
+  // watchForFileChanges: false,
+  // key: 'dummyKey',
+  // ciBuildId: '123',
 };
 console.log(`runOptions: ${JSON.stringify(runOptions)}`);
 
@@ -19,14 +19,17 @@ cypress
   .run(runOptions)
   .then((result) => {
     if (result.failures) {
-      console.error(JSON.stringify(result));
+      // console.error(JSON.stringify(result));
+      printRedFailure(result);
       process.exit(1);
     }
     if (result.totalFailed > 0) {
+      printRedFailure(JSON.stringify(result, null, 2));
       process.exit(1);
     } else {
       console.log('All tests passed');
-      console.log(JSON.stringify(result, null, 2));
+      printGreenSuccess(result);
+      // console.log(JSON.stringify(result, null, 2));
     }
   })
   .catch((err) => {
@@ -49,3 +52,13 @@ cypress
 //     console.log(err);
 //     // process.exitCode = 2;
 //   });
+
+const OCTESC = '\033';
+
+function printGreenSuccess(message) {
+  console.log(`${OCTESC}[1;32m ✔ \"${message}\"${OCTESC}[0m${OCTESC}[32m executed successfully!${OCTESC}[0m`);
+}
+
+function printRedFailure(message) {
+  console.log(`${OCTESC}[1;31m ✘ \"${message}\"${OCTESC}[0m${OCTESC}[31m failed!${OCTESC}[0m`);
+}
